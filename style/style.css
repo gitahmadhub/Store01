@@ -1,0 +1,36 @@
+body,ul,li,div,p,span,h1,h2,h3,h4,h5,h6,i,a{
+    margin: 0;padding:0;
+    } 
+    .main{
+        margin: 0 auto;
+        width: 1000px;
+    }
+    .red{
+        background-color: red;
+    }
+    .yellow{
+        background-color: yellow;
+    }
+    
+    .mydiv{
+        width:100px;
+        height:100px;
+        background-color: yellow;
+    }
+    
+    .mynav {
+        background-color: rgba(31, 35, 231, 0.205)!important;
+    }
+    
+    .img-fluid{
+        width:600px;
+        height:430px;
+    }
+    .hero-text{
+        margin-top:0px;
+        padding:0px;
+    }
+    .product-item{
+        width:300px;
+        height:300px;
+    }

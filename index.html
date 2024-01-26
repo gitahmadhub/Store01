@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bootstrap demo</title>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="style/style.css" rel="stylesheet">
+  <script>
+    let cart = []; // Array to store cart items
+
+    function addToCart(itemName, itemPrice, imageUrl) {
+    const existingItem = cart.find(item => item.name === itemName);
+
+    if (existingItem) {
+      // If item already exists, update quantity
+      existingItem.quantity += 1;
+    } else {
+      // If item doesn't exist, add a new item
+      const newItem = { name: itemName, price: itemPrice, image: imageUrl, quantity: 1 };
+      cart.push(newItem);
+    }
+
+    // Store updated cart data in localStorage
+    localStorage.setItem('cart', JSON.stringify(cart));
+
+    // Update cart badge and show cart items
+    updateCartBadge();
+    showCartItems();
+  }
+
+    function updateCartBadge() {
+      const cartBadge = document.getElementById('cart-badge');
+      if (cartBadge) {
+        cartBadge.textContent = cart.length;
+      }
+    }
+
+    function showCartItems() {
+      const cartItemsDiv = document.getElementById('cart-items');
+      if (cartItemsDiv) {
+        // Clear previous items
+        cartItemsDiv.innerHTML = '';
+
+        // Display current items in the cart
+        cart.forEach(item => {
+          const itemDiv = document.createElement('div');
+          itemDiv.innerHTML = `<p>${item.name} - $${item.price}</p>`;
+          cartItemsDiv.appendChild(itemDiv);
+        });
+
+        // Show the cart items div
+        cartItemsDiv.classList.remove('d-none');
+      }
+    }
+  </script>
+</head>
+
+<body>
+
+  <div>
+    <nav class="mynav navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container">
+        <a class="navbar-brand" href="#">Pistol Shop</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="cart.html"> <span class="badge bg-secondary" id="cart-badge">0</span>Cart</a>
+            </li>
+          </ul>
+          <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <div class="hero-area">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 textcenter hero-text">
+          <h1>Welcome to American Grocery Store</h1>
+          <h4>This is a famous store</h4>
+          <button class="btn btn-success">Shop Now</button>
+        </div>
+        <div class="col-md-6">
+          <img src="img/photo.jpeg" class="img-fluid" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="product-area text-center ">
+      <h1>Grocery Items</h1>
+      <div class="row">
+        <div class="col-md-4">
+          <img src="img/download.jpeg" class="img-fluid">
+          <h4>Potato</h4>
+          <h4>$10 CAD</h4>
+          <button class="btn btn-success" onclick="addToCart('Potato', 10, 'img/download.jpeg')">Add to Cart</button>
+        </div>
+        <div class="col-md-4">
+          <img src="img/cab.jpg" class="img-fluid">
+          <h4>Cabage</h4>
+          <h4>$5 CAD</h4>
+          <button class="btn btn-success" onclick="addToCart('Cabage', 5, 'img/cab.jpg')">Add to Cart</button>
+        </div>
+        <div class="col-md-4">
+          <img src="img/Milk.jpg" class="img-fluid">
+          <h4>Milk</h4>
+          <h4>$10 CAD</h4>
+          <button class="btn btn-success" onclick="addToCart('Milk', 10, 'img/Milk.jpg')">Add to Cart</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <img src="img/bread.jpg" class="img-fluid">
+          <h4>Bread</h4>
+          <h4>$12 CAD</h4>
+          <button class="btn btn-success" onclick="addToCart('Bread', 12, 'img/bread.jpg')">Add to Cart</button>
+        </div>
+        <div class="col-md-4">
+          <img src="img/oil.webp" class="img-fluid">
+          <h4>Cannola Oil</h4>
+          <h4>$20 CAD</h4>
+          <button class="btn btn-success" onclick="addToCart('Cannola Oil', 20, 'img/oil.webp')">Add to Cart</button>
+        </div>
+        <div class="col-md-4">
+          <img src="img/02.jpg" class="img-fluid">
+          <h4>Colt</h4>
+          <h4>$500 CAD</h4>
+          <button class="btn btn-success" onclick="addToCart('Colt', 500, 'img/02.jpg')">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shopping Cart</title>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="style/cart.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>Your Shopping Cart</h1>
+    <div id="cart-items">
+      <!-- Cart items will be displayed here -->
+    </div>
+    <div id="total-price">
+      <!-- Total price will be displayed here -->
+    </div>
+  </div>
+
+      </div>
+    <button class="btn btn-primary" onclick="goToIndexPage()">Go Back to Shopping</button>
+  </div>
+
+
+  <script>
+    // Retrieve cart data from localStorage
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    // Function to show cart items
+    function showCartItems() {
+      const cartItemsDiv = document.getElementById('cart-items');
+      const totalPriceDiv = document.getElementById('total-price');
+
+      if (cartItemsDiv && totalPriceDiv) {
+        // Clear previous items
+        cartItemsDiv.innerHTML = '';
+        totalPriceDiv.innerHTML = '';
+
+        let total = 0;
+
+        // Display current items in the cart
+        cart.forEach(item => {
+          const itemDiv = document.createElement('div');
+          itemDiv.innerHTML = `
+            <div>
+              <img src="${item.image}" alt="${item.name}" style="max-width: 100px; max-height: 100px;">
+              <p>${item.name} - $${item.price.toFixed(2)} - Quantity: 
+                <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity('${item.name}', this.value)">
+                <button onclick="removeItem('${item.name}')">Remove</button>
+              </p>
+            </div>`;
+          cartItemsDiv.appendChild(itemDiv);
+
+          // Calculate the total price
+          total += item.price * item.quantity;
+        });
+
+        // Display the total price
+        totalPriceDiv.innerHTML = `<p>Total Price: $${total.toFixed(2)}</p>`;
+
+        // Show the cart items and total price divs
+        cartItemsDiv.classList.remove('d-none');
+        totalPriceDiv.classList.remove('d-none');
+      }
+    }
+
+    // Update quantity function
+    function updateQuantity(itemName, newQuantity) {
+      const itemToUpdate = cart.find(item => item.name === itemName);
+      if (itemToUpdate) {
+        itemToUpdate.quantity = parseInt(newQuantity, 10);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        showCartItems(); // Refresh the display after updating quantity
+      }
+    }
+
+    // Remove item function
+    function removeItem(itemName) {
+      const updatedCart = cart.filter(item => item.name !== itemName);
+      localStorage.setItem('cart', JSON.stringify(updatedCart));
+      cart = updatedCart; // Update the in-memory cart as well
+      showCartItems(); // Refresh the display after removing item
+    }
+
+    // Display cart items when the page loads
+    document.addEventListener('DOMContentLoaded', showCartItems);
+
+        // Function to navigate back to index.html
+        function goToIndexPage() {
+      window.location.href = 'index.html';
+    }
+    
+  </script>
+
+  <script src="js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
